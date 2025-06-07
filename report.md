@@ -233,4 +233,3 @@ From the experimental results table, several key trends and insights emerge:
 
 ---
 
-*This report can be extended with actual experiment tables and plots after running train_eval.py.*
