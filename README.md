@@ -66,7 +66,7 @@ python visualize_utsp.py
 
 ## Results and Report
 - See `report.md` for experimental results, implementation details, and performance comparisons.
-- Fill in the results table in `report.md` after running `train_eval.py`.
+
 
 ## Notes
 - The baseline model is SAG (Scattering Attention GNN) as in the original UTSP paper.
