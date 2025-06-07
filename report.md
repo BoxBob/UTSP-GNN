@@ -66,19 +66,42 @@ This report documents the re-implementation and extension of the UTSP framework 
 ## 3. Surrogate Loss Functions
 
 ### 3.1 Original Surrogate Loss (from paper)
+The surrogate loss function used in UTSP is designed to encourage the GNN to output a heatmap that is both close to a valid TSP tour and short in length. The loss is:
 
 $$
-L = \lambda_1 \sum_{i} (\sum_j T_{i,j} - 1)^2 + \lambda_2 \sum_i H_{i,i} + \sum_{i,j} D_{i,j} H_{i,j}
+L = \lambda_1 \sum_{i=1}^n \left(\sum_{j=1}^n T_{i,j} - 1\right)^2 + \lambda_2 \sum_{i=1}^n H_{i,i} + \sum_{i=1}^n \sum_{j=1}^n D_{i,j} H_{i,j}
 $$
-- **Row sum constraint:** Encourages T to be doubly stochastic.
-- **Diagonal penalty:** Discourages self-loops.
-- **Expected tour length:** Encourages short tours.
+
+Where:
+- $T \in \mathbb{R}^{n \times n}$ is the soft indicator matrix (after column-wise softmax), with $T_{i,j}$ representing the probability of going from node $i$ to node $j$.
+- $H \in \mathbb{R}^{n \times n}$ is the heatmap matrix, constructed from $T$ using the T→H transformation:
+  $$
+  H = \sum_{t=1}^{n-1} p_t p_{t+1}^T + p_n p_1^T
+  $$
+  where $p_t$ is the $t$-th column of $T$.
+- $D \in \mathbb{R}^{n \times n}$ is the distance matrix, with $D_{i,j}$ the Euclidean distance between cities $i$ and $j$.
+- $\lambda_1$ and $\lambda_2$ are hyperparameters (typically set to 1).
+
+**Terms:**
+- The first term ($\lambda_1$) enforces that each row of $T$ sums to 1 (row-wise constraint, encouraging a permutation matrix).
+- The second term ($\lambda_2$) penalizes self-loops by summing the diagonal of $H$.
+- The third term is the expected TSP tour length, weighted by the heatmap $H$.
 
 ### 3.2 Entropy-based Loss
-- Adds an entropy regularization term to encourage sharp (confident) edge probabilities.
+Adds an entropy regularization term to encourage sharp (confident) edge probabilities in $T$:
+
+$$
+L_{\text{entropy}} = L - \beta \sum_{i,j} T_{i,j} \log T_{i,j}
+$$
+where $\beta$ is a regularization parameter.
 
 ### 3.3 Laplacian-based Loss
-- Adds a graph Laplacian regularization to encourage smoothness or structure in the heatmap.
+Adds a graph Laplacian regularization to encourage smoothness or structure in the heatmap $H$:
+
+$$
+L_{\text{laplacian}} = L + \gamma \cdot \text{Tr}(H^T L_G H)
+$$
+where $L_G$ is the graph Laplacian matrix and $\gamma$ is a regularization parameter.
 
 ## 4. Why Some Models Perform Better
 
