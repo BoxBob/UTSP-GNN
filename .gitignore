@@ -1,0 +1,25 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+.DS_Store
+.env
+.venv
+.envrc
+.idea/
+.vscode/
+*.ipynb_checkpoints/
+*.egg-info/
+.cache/
+
+# VSCode settings
+.vscode/
+
+# Python virtual environments
+venv/
+ENV/
+
+# OS files
+Thumbs.db
