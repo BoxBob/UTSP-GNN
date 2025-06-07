@@ -199,7 +199,7 @@ Below are the results for all combinations of GNN architectures (SAG, GCN, GAT, 
 | 200 | GCN        | Laplacian | 11.552      | 11.747     | -1.66   | 22.25    |
 | 200 | GAT        | Original  | 11.869      | 11.747     | 1.04    | 23.69    |
 | 200 | GAT        | Entropy   | 11.552      | 11.747     | -1.66   | 24.12    |
-| 200 | GAT        | Laplacian | 12.178      | 11.747     | 3.66    | 24.14    |
+| 200 | GAT        | Laplacian | 12.179      | 11.747     | 3.66    | 24.14    |
 | 200 | GIN        | Original  | 11.910      | 11.747     | 1.39    | 21.76    |
 | 200 | GIN        | Entropy   | 11.386      | 11.747     | -3.07   | 22.29    |
 | 200 | GIN        | Laplacian | 11.998      | 11.747     | 2.13    | 22.00    |
